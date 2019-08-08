@@ -22,3 +22,30 @@ curl https://sh.rustup.rs -sSf | sh
 source $HOME/.cargo/env
 ```
 
+### 4. For init Enigma directory
+```bash
+discovery init .
+```
+
+### 5. Clone code into directory
+```bash
+git clone https://github.com/AnkerPay/Enigma-Privacy-Tools.git
+```
+### 6. Run enigma
+```bash
+discovery compile
+discovery migrate
+discovery start
+```
+
+### 7. Run frontend
+```bash
+cd client
+npm install
+npm start
+```
+
+Location: https://localhost:3000/
+
+
+
