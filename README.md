@@ -45,7 +45,7 @@ npm install
 npm start
 ```
 
-Location: https://localhost:3000/
+API Location: https://localhost:3000/
 
 
 
