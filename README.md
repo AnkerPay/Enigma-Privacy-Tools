@@ -13,4 +13,12 @@ apt install docker docker-compose
 npm i -g @enigmampc/discovery-cli
 ```
 Start the network — `discovery start`
+
 Stop the network — `discovery stop`
+
+### 3. Install RUST
+```bash
+curl https://sh.rustup.rs -sSf | sh
+source $HOME/.cargo/env
+```
+
