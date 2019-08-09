@@ -51,9 +51,9 @@ impl ContractInterface for Contract {
 
     #[no_mangle]
     fn check_email(email: String) -> String {
-        let mut emails = Self::get_emails();
-        let index = emails.iter().position(|&r| r.email == email).unwrap();
-        emails[index].ankaddress
+        let emails = Self::get_emails();
+        let index = emails.iter().position(|r| r.email == email).unwrap();
+        return emails[index].ankaddress.clone();
     }
 
 }
