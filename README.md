@@ -1,4 +1,14 @@
 # Enigma-Privacy-Tools
+## Solution Description
+This solution should enable user A to encrypt a email address, and bind it with ANK address. Other users should be able to access and view the encrypted email and ANK address.
+
+### This will involve:
+
+Writing a Secret Contract in Rust and deploying it to the Enigma Discovery network that handles the logic for the privacy tool application
+
+Using the Enigma-JS client to encrypt and transmit user A’s email and address to the secret contract.
+
+Using the Enigma-JS client to encrypt and transmit user’s requests for the data to the secret contract, to receive the correct output and successfully decrypt ANK address.
 
 ## Install
 ### 1. Install requirements:
