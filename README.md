@@ -9,10 +9,10 @@ Node.js version 10 or higher
 
 ```bash
 apt update
-apt install nodejs npm mc aptitude
+apt install nvm mc aptitude
 apt install build-essential
 apt install apt-transport-https ca-certificates curl software-properties-common
-
+nvm install 10.16.2
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
 apt update
