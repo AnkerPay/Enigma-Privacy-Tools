@@ -33,7 +33,7 @@ impl Contract {
 #[pub_interface]
 pub trait ContractInterface{
     fn add_email(email: String, ankaddress: String);
-    fn check_email(email: String) -> String;
+    fn check_email(email: String) -> PrivacyInfo;
 }
 
 // Implementation of the public-facing secret contract functions defined in the ContractInterface
@@ -50,10 +50,10 @@ impl ContractInterface for Contract {
     }
 
     #[no_mangle]
-    fn check_email(email: String) {
+    fn check_email(email: String) -> PrivacyInfo {
         let mut emails = Self::get_emails();
-        let index = emails.iter().position(|&r| r == email).unwrap();
-        index
+        let index = emails.iter().position(|&r| r.email == email).unwrap();
+        emails(index)
     }
 
 }
