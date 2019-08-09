@@ -32,8 +32,8 @@ impl Contract {
 // Public trait defining public-facing secret contract functions
 #[pub_interface]
 pub trait ContractInterface{
-    fn add_email(email: String, ankaddress: String) -> bool;
-    fn check_email() -> String;
+    fn add_email(email: String, ankaddress: String);
+    fn check_email(email: String) -> String;
 }
 
 // Implementation of the public-facing secret contract functions defined in the ContractInterface
