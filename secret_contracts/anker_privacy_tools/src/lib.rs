@@ -9,6 +9,7 @@ use eng_wasm::*;
 use eng_wasm_derive::pub_interface;
 use serde::{Serialize, Deserialize};
 
+static PRIVACYINFO: &str = "PrivacyInfo";
 
 // Structs
 #[derive(Serialize, Deserialize)]
