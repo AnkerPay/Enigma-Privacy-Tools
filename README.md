@@ -2,6 +2,11 @@
 
 ## Install
 ### 1. Install requirements:
+
+Docker Compose version 1.23.2 or higher
+
+Node.js version 10 or higher
+
 ```bash
 apt update
 apt install nodejs npm mc
