@@ -29,7 +29,7 @@ class Header extends Component {
                             variant="subtitle1"
                             color="inherit"
                         >
-                            Enigma Discovery Template DApp
+                            Enigma Privacy Tools
                         </Typography>
                     </Toolbar>
                 </AppBar>
