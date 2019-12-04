@@ -93,6 +93,7 @@ class App extends Component {
         const taskGasPx = utils.toGrains(1e-7);
         var result = this.props.enigma.computeTask(taskFn, taskArgs, taskGasLimit, taskGasPx, this.state.ownerAddress, this.state.contractAddress)
         alert("ANK PUBKEY" + result)
+        console.log(result)
         this.setState({
             isRequesting: false,
         });
