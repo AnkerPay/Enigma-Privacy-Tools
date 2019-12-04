@@ -136,14 +136,14 @@ class App extends Component {
                         <input type="text" className="form-control" value={this.state.email} onChange={this.emailChange} />
                         <input type="text" className="form-control" value={this.state.pubkey} onChange={this.pukeyChange} />
                     </label>
-                    <input type="submit" className="form-control" disabled={this.state.isRequesting} value="Submit" />
+                    <input type="submit" className="form-control sbt" disabled={this.state.isRequesting} value="Submit" />
                 </form>
                 <form className="form-inline" onSubmit={this.handleCheck}>
                     <label>
                         Check Email:
                         <input type="text" className="form-control" value={this.state.email} onChange={this.emailChange} />
                     </label>
-                    <input type="submit" className="form-control" disabled={this.state.isRequesting} value="Submit" />
+                    <input type="submit" className="form-control sbt" disabled={this.state.isRequesting} value="Submit" />
                 </form>
               </div>
             );
