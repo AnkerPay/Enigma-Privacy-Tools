@@ -130,20 +130,20 @@ class App extends Component {
                     <Header/>
                     <Message color="green">Enigma setup has loaded!</Message>
                 </div>
-                <form onSubmit={this.handleSubmit}>
+                <form className="form-inline" onSubmit={this.handleSubmit}>
                     <label>
                         Add here email and ANK pubkey:
-                        <input type="text" value={this.state.email} onChange={this.emailChange} />
-                        <input type="text" value={this.state.pubkey} onChange={this.pukeyChange} />
+                        <input type="text" className="form-control" value={this.state.email} onChange={this.emailChange} />
+                        <input type="text" className="form-control" value={this.state.pubkey} onChange={this.pukeyChange} />
                     </label>
-                    <input type="submit" disabled={this.state.isRequesting} value="Submit" />
+                    <input type="submit" className="form-control" disabled={this.state.isRequesting} value="Submit" />
                 </form>
-                <form onSubmit={this.handleCheck}>
+                <form className="form-inline" onSubmit={this.handleCheck}>
                     <label>
                         Email:
-                        <input type="text" value={this.state.email} onChange={this.emailChange} />
+                        <input type="text" className="form-control" value={this.state.email} onChange={this.emailChange} />
                     </label>
-                    <input type="submit" disabled={this.state.isRequesting} value="Submit" />
+                    <input type="submit" className="form-control" disabled={this.state.isRequesting} value="Submit" />
                 </form>
               </div>
             );
