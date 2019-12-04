@@ -94,7 +94,9 @@ class App extends Component {
         var result = this.props.enigma.computeTask(taskFn, taskArgs, taskGasLimit, taskGasPx, this.state.ownerAddress, this.state.contractAddress)
         alert("ANK PUBKEY" + result)
         console.log(result)
-        result = this.props.enigma.decryptTaskResult(result);
+        result = this.props.enigma.getTaskResult(result)
+        console.log(result)
+        result = this.props.enigma.decryptTaskResult(result)
         console.log(result)
         console.log(result.decryptedOutput)
         this.setState({
