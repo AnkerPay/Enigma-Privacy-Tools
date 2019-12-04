@@ -56,6 +56,14 @@ class App extends Component {
                     <Header/>
                     <Message color="green">Enigma setup has loaded!</Message>
                 </div>
+                <form onSubmit={this.handleSubmit}>
+                    <label>
+                        Add here email and ANK pubkey:
+                        <input type="text" value={this.state.email} />
+                        <input type="text" value={this.state.pubkey}  />
+                    </label>
+                    <input type="submit" disabled={this.state.isRequesting} value="Submit" />
+                </form>
             );
         }
     }
