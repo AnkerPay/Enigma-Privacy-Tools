@@ -35,6 +35,8 @@ class App extends Component {
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleCheck = this.handleCheck.bind(this);
+        this.emailChange = this.emailChange.bind(this);
+        this.pukeyChange = this.pukeyChange.bind(this);
     }
 
     async componentDidMount() {
