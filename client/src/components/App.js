@@ -13,6 +13,7 @@ import Header from "./Header";
 import "../App.css";
 // Imports - Actions (Redux)
 import { initializeEnigma, initializeAccounts } from '../actions';
+import { utils, eeConstants } from 'enigma-js';
 
 const styles = theme => ({
     root: {
@@ -70,7 +71,7 @@ class App extends Component {
         ];
         const taskGasLimit = 10000000;
         const taskGasPx = utils.toGrains(1e-7);
-        this.props.enigma.computeTask(taskFn, taskArgs, taskGasLimit, taskGasPx, this.state.ownerAddress, contractAddress)
+        this.props.enigma.computeTask(taskFn, taskArgs, taskGasLimit, taskGasPx, this.state.ownerAddress, this.state.contractAddress)
         alert("Successfully Added")
         this.setState({
             isRequesting: false,
@@ -89,7 +90,7 @@ class App extends Component {
          ];
         const taskGasLimit = 10000000;
         const taskGasPx = utils.toGrains(1e-7);
-        result = this.props.enigma.computeTask(taskFn, taskArgs, taskGasLimit, taskGasPx, ownerAddress, this.props.deployedDataValidation)
+        var result = this.props.enigma.computeTask(taskFn, taskArgs, taskGasLimit, taskGasPx, ownerAddress, this.props.deployedDataValidation)
         alert("ANK PUBKEY" + result)
         this.setState({
             isRequesting: false,
