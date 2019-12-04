@@ -31,6 +31,7 @@ class App extends Component {
         this.state = {
             email: "",
             pubkey: "",
+            ownerAddress: "",
             isRequesting: false
         };
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -48,6 +49,11 @@ class App extends Component {
         const accounts = await enigma.web3.eth.getAccounts();
         // Create redux action to initialize set state variable containing unlocked accounts
         this.props.initializeAccounts(accounts);
+        const secretContractCount = await enigma.enigmaContract.methods.countSecretContracts().call();
+
+        const contractAddress = (await enigma.enigmaContract.methods
+          .getSecretContractAddresses(secretContractCount - 1, secretContractCount).call())[0];
+        // Create redux action to set state variable containing deployed millionaires' problem secret contract address
     }
     
     handleSubmit(event) {
@@ -57,6 +63,14 @@ class App extends Component {
 
         //this.tryRegister(this.state.domainToRegister);
         event.preventDefault();
+        const taskFn = 'add_email(string,string)';
+        const taskArgs = [
+          [this.state.email, 'string'],
+          [this.state.pubkey, 'string'],
+        ];
+        const taskGasLimit = 10000000;
+        const taskGasPx = utils.toGrains(1e-7);
+        this.props.enigma.computeTask(taskFn, taskArgs, taskGasLimit, taskGasPx, this.state.ownerAddress, contractAddress)
         alert("Successfully Added")
         this.setState({
             isRequesting: false,
@@ -69,7 +83,14 @@ class App extends Component {
 
         //this.tryRegister(this.state.domainToRegister);
         event.preventDefault();
-        alert("ANK PUBKEY")
+        const taskFn = 'check_email(string)';
+        const taskArgs = [
+          [this.state.email, 'string']
+         ];
+        const taskGasLimit = 10000000;
+        const taskGasPx = utils.toGrains(1e-7);
+        result = this.props.enigma.computeTask(taskFn, taskArgs, taskGasLimit, taskGasPx, ownerAddress, this.props.deployedDataValidation)
+        alert("ANK PUBKEY" + result)
         this.setState({
             isRequesting: false,
         });
@@ -84,6 +105,7 @@ class App extends Component {
             pubkey: event.target.value
         });
     }
+    
     render() {
         if (!this.props.enigma) {
             return (
@@ -122,7 +144,9 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => {
-    return { enigma: state.enigma }
+    return { 
+        enigma: state.enigma
+    }
 };
 
 export default connect(
