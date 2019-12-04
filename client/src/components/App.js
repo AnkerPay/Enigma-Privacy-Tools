@@ -56,6 +56,9 @@ class App extends Component {
         //this.tryRegister(this.state.domainToRegister);
         event.preventDefault();
         alert("Successfully Added")
+        this.setState({
+            isRequesting: false,
+        });
     }
     handleCheck(event) {
         this.setState({
@@ -65,8 +68,20 @@ class App extends Component {
         //this.tryRegister(this.state.domainToRegister);
         event.preventDefault();
         alert("ANK PUBKEY")
+        this.setState({
+            isRequesting: false,
+        });
     }
-    
+    emailChange(event) {
+        this.setState({
+            email: event.target.value
+        });
+    }
+    pukeyChange(event) {
+        this.setState({
+            pubkey: event.target.value
+        });
+    }
     render() {
         if (!this.props.enigma) {
             return (
@@ -86,15 +101,15 @@ class App extends Component {
                 <form onSubmit={this.handleSubmit}>
                     <label>
                         Add here email and ANK pubkey:
-                        <input type="text" value={this.state.email} />
-                        <input type="text" value={this.state.pubkey}  />
+                        <input type="text" value={this.state.email} onChange={this.emailChange} />
+                        <input type="text" value={this.state.pubkey} onChange={this.pukeyChange} />
                     </label>
                     <input type="submit" disabled={this.state.isRequesting} value="Submit" />
                 </form>
                 <form onSubmit={this.handleCheck}>
                     <label>
                         Email:
-                        <input type="text" value={this.state.email} />
+                        <input type="text" value={this.state.email} onChange={this.emailChange} />
                     </label>
                     <input type="submit" disabled={this.state.isRequesting} value="Submit" />
                 </form>
