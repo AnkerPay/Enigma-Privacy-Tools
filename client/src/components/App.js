@@ -32,7 +32,7 @@ class App extends Component {
         this.state = {
             email: "",
             pubkey: "",
-            ownerAddress: "",
+            ownerAddress: "0xFFcf8FDEE72ac11b5c542428B35EEF5769C409f0",
             isRequesting: false,
             contractAddress: ""
         };
