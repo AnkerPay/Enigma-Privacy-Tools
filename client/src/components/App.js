@@ -78,6 +78,7 @@ class App extends Component {
         }
         else {
             return (
+              <div>
                 <div className="App">
                     <Header/>
                     <Message color="green">Enigma setup has loaded!</Message>
@@ -97,6 +98,7 @@ class App extends Component {
                     </label>
                     <input type="submit" disabled={this.state.isRequesting} value="Submit" />
                 </form>
+              </div>
             );
         }
     }
