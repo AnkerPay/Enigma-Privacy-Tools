@@ -28,6 +28,13 @@ const styles = theme => ({
 class App extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            email: "",
+            pubkey: "",
+            isRequesting: false
+        };
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleCheck = this.handleCheck.bind(this);
     }
 
     async componentDidMount() {
@@ -40,7 +47,26 @@ class App extends Component {
         // Create redux action to initialize set state variable containing unlocked accounts
         this.props.initializeAccounts(accounts);
     }
+    
+    handleSubmit(event) {
+        this.setState({
+            isRequesting: true,
+        });
 
+        //this.tryRegister(this.state.domainToRegister);
+        event.preventDefault();
+        alert("Successfully Added")
+    }
+    handleCheck(event) {
+        this.setState({
+            isRequesting: true,
+        });
+
+        //this.tryRegister(this.state.domainToRegister);
+        event.preventDefault();
+        alert("ANK PUBKEY")
+    }
+    
     render() {
         if (!this.props.enigma) {
             return (
@@ -61,6 +87,13 @@ class App extends Component {
                         Add here email and ANK pubkey:
                         <input type="text" value={this.state.email} />
                         <input type="text" value={this.state.pubkey}  />
+                    </label>
+                    <input type="submit" disabled={this.state.isRequesting} value="Submit" />
+                </form>
+                <form onSubmit={this.handleCheck}>
+                    <label>
+                        Email:
+                        <input type="text" value={this.state.email} />
                     </label>
                     <input type="submit" disabled={this.state.isRequesting} value="Submit" />
                 </form>
