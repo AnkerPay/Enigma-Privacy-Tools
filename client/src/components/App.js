@@ -33,7 +33,8 @@ class App extends Component {
             email: "",
             pubkey: "",
             ownerAddress: "",
-            isRequesting: false
+            isRequesting: false,
+            contractAddress = ""
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleCheck = this.handleCheck.bind(this);
@@ -52,7 +53,7 @@ class App extends Component {
         this.props.initializeAccounts(accounts);
         const secretContractCount = await enigma.enigmaContract.methods.countSecretContracts().call();
 
-        const contractAddress = (await enigma.enigmaContract.methods
+        this.state.contractAddress = (await enigma.enigmaContract.methods
           .getSecretContractAddresses(secretContractCount - 1, secretContractCount).call())[0];
         // Create redux action to set state variable containing deployed millionaires' problem secret contract address
     }
@@ -90,7 +91,7 @@ class App extends Component {
          ];
         const taskGasLimit = 10000000;
         const taskGasPx = utils.toGrains(1e-7);
-        var result = this.props.enigma.computeTask(taskFn, taskArgs, taskGasLimit, taskGasPx, ownerAddress, this.props.deployedDataValidation)
+        var result = this.props.enigma.computeTask(taskFn, taskArgs, taskGasLimit, taskGasPx, this.state.ownerAddress, this.state.contractAddress)
         alert("ANK PUBKEY" + result)
         this.setState({
             isRequesting: false,
