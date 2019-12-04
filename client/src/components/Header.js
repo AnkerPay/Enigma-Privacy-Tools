@@ -25,7 +25,7 @@ class Header extends Component {
             <div className={classes.root}>
                 <AppBar position="static">
                     <Toolbar>
-                        <img src="https://i0.wp.com/ankerpay.com/wp-content/uploads/2019/11/cropped-Asset-12.png?fit=342%2C342&amp;ssl=1" width="40">
+                        <img src="https://i0.wp.com/ankerpay.com/wp-content/uploads/2019/11/cropped-Asset-12.png?fit=342%2C342&amp;ssl=1" width="40" />
                         <Typography
                             variant="subtitle1"
                             color="inherit"
