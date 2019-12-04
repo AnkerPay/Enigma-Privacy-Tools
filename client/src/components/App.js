@@ -34,7 +34,7 @@ class App extends Component {
             pubkey: "",
             ownerAddress: "",
             isRequesting: false,
-            contractAddress: = ""
+            contractAddress: ""
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleCheck = this.handleCheck.bind(this);
