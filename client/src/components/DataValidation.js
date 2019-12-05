@@ -168,7 +168,13 @@ class DataValidation extends Component {
       // Decrypt the task result - obtains the decrypted, abi-encoded output
       task = await this.props.enigma.decryptTaskResult(task);
       // Abi-decode the output to its desired components
+      const ankaddress = this.props.enigma.web3.eth.abi.decodeParameters([{
+        type: 'string',
+        name: 'ankaddress',
+      }], task.decryptedOutput).ankaddress;
+
       console.log(task)
+      console.log(ankaddress)
       openSnackbar({ message: 'Task succeeded: added dataset equal to the previous one' });
     } else {
       openSnackbar({ message: 'Task failed: did not add dataset' });
