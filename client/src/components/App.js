@@ -84,7 +84,7 @@ class App extends Component {
         console.log(sender)
     }
     
-    handleSubmit(event) {
+    handleSubmit = async (event) => {
         this.setState({
             isRequesting: true,
         });
