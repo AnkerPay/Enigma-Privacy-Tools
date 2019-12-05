@@ -18,7 +18,7 @@ const initializeAccountsReducer = (accounts = [], action) => {
 };
 
 const deployedDataValidationReducer = (deployedDataValidation = null, action) => {
-    if (action.type === 'DATA_VALIDATION_DEPLOYED') {
+    if (action.type === 'ANKER_PRIVACY_TOOLS_DEPLOYED') {
         return action.payload;
     }
 

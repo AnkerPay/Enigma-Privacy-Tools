@@ -14,7 +14,7 @@ export const initializeAccounts = (accounts) => {
 
 export const deployDataValidation = (deployedDataValidation) => {
     return {
-        type: 'DATA_VALIDATION_DEPLOYED',
+        type: 'ANKER_PRIVACY_TOOLS_DEPLOYED',
         payload: deployedDataValidation
     };
 };
