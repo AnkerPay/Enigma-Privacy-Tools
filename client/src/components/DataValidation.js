@@ -123,7 +123,7 @@ class DataValidation extends Component {
     if (this.props.deployedDataValidation === null) {
       return (
         <div>
-          <Message color="red">Data Validation secret contract not yet deployed...</Message>
+          <Message color="red">Anker Privacy secret contract not yet deployed...</Message>
         </div>
       )
     }
