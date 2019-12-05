@@ -91,12 +91,14 @@ class DataValidation extends Component {
     ];
     const taskGasLimit = 10000000;
     const taskGasPx = utils.toGrains(1e-7);
+    console.log('computeTask')
     let task = await new Promise((resolve, reject) => {
       this.props.enigma.computeTask(taskFn, taskArgs, taskGasLimit, taskGasPx, ownerAddress,
         this.props.deployedDataValidation)
         .on(eeConstants.SEND_TASK_INPUT_RESULT, (result) => resolve(result))
         .on(eeConstants.ERROR, (error) => reject(error));
     });
+    console.log('wait computeTask')
     this.setState({ isPending: true });
     while (task.ethStatus === 1) {
       // Poll for task record status and finality on Ethereum after worker has finished computation
@@ -144,6 +146,7 @@ class DataValidation extends Component {
     ];
     const taskGasLimit = 10000000;
     const taskGasPx = utils.toGrains(1e-7);
+    console.log('computeTask')
     let task = await new Promise((resolve, reject) => {
       this.props.enigma.computeTask(taskFn, taskArgs, taskGasLimit, taskGasPx, ownerAddress,
         this.props.deployedDataValidation)
@@ -151,6 +154,7 @@ class DataValidation extends Component {
         .on(eeConstants.ERROR, (error) => reject(error));
     });
     this.setState({ isPending: true });
+    console.log('wait computeTask')
     while (task.ethStatus === 1) {
       // Poll for task record status and finality on Ethereum after worker has finished computation
       task = await this.props.enigma.getTaskRecordStatus(task);
