@@ -10,9 +10,10 @@ import { withStyles } from "@material-ui/core";
 import getEnigmaInit from "../utils/getEnigmaInit.js";
 // Imports - Components
 import Header from "./Header";
+import DataValidation from "./DataValidation";
 import "../App.css";
 // Imports - Actions (Redux)
-import { initializeEnigma, initializeAccounts } from '../actions';
+import { initializeEnigma, initializeAccounts, deployDataValidation } from '../actions';
 import { utils, eeConstants } from 'enigma-js';
 
 const styles = theme => ({
@@ -78,11 +79,10 @@ class App extends Component {
         this.props.initializeAccounts(accounts);
         const secretContractCount = await enigma.enigmaContract.methods.countSecretContracts().call();
 
-        this.state.contractAddress = (await enigma.enigmaContract.methods
+        const deployedDataValidationAddress = (await enigma.enigmaContract.methods
           .getSecretContractAddresses(secretContractCount - 1, secretContractCount).call())[0];
-        console.log(this.state.contractAddress)
-        const sender = this.props.accounts[this.props.accountId];
-        console.log(sender)
+
+        this.props.deployDataValidation(deployedDataValidationAddress);
     }
     
     handleSubmit(event) {
@@ -109,7 +109,7 @@ class App extends Component {
         this.setState({
             isRequesting: true,
         });
-this.componentDidMount()
+        
         //this.tryRegister(this.state.domainToRegister);
         event.preventDefault();
         const taskFn = 'check_email(string)';
@@ -185,6 +185,7 @@ this.componentDidMount()
                     <Header/>
                     <Message color="green">Enigma setup has loaded!</Message>
                 </div>
+                <p>Secret Contract Address: <b>{this.props.deployedDataValidation}</b></p>
                 <form className="form-inline" onSubmit={this.handleSubmit}>
                     <label>
                         Add here email and ANK pubkey:
@@ -200,7 +201,12 @@ this.componentDidMount()
                     </label>
                     <input type="submit" className="form-control sbt" disabled={this.state.isRequesting} value="Submit" />
                 </form>
-              </div>
+                    <Container>
+                        <Paper style={{ padding: '30px' }}>
+                            <DataValidation />
+                        </Paper>
+                    </Container>
+                </div>
             );
         }
     }
@@ -208,11 +214,12 @@ this.componentDidMount()
 
 const mapStateToProps = (state) => {
     return { 
-        enigma: state.enigma
+        enigma: state.enigma,
+        deployedDataValidation: state.deployedDataValidation,
     }
 };
 
 export default connect(
     mapStateToProps,
-    { initializeEnigma, initializeAccounts }
+    { initializeEnigma, initializeAccounts, deployDataValidation }
 )(withStyles(styles)(App));

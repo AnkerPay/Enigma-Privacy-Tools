@@ -12,6 +12,13 @@ export const initializeAccounts = (accounts) => {
     };
 };
 
+export const deployDataValidation = (deployedDataValidation) => {
+    return {
+        type: 'DATA_VALIDATION_DEPLOYED',
+        payload: deployedDataValidation
+    };
+};
+
 export const notifyMessage = (notification) => {
     return {
         type: 'MESSAGE_NOTIFIED',

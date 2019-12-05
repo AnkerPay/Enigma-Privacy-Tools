@@ -17,6 +17,14 @@ const initializeAccountsReducer = (accounts = [], action) => {
     return accounts;
 };
 
+const deployedDataValidationReducer = (deployedDataValidation = null, action) => {
+    if (action.type === 'DATA_VALIDATION_DEPLOYED') {
+        return action.payload;
+    }
+
+    return deployedDataValidation;
+};
+
 const notifyMessageReducer = (notification = {open: false, message: ''}, action) => {
     if (action.type === 'MESSAGE_NOTIFIED') {
         return action.payload;
@@ -28,6 +36,7 @@ const notifyMessageReducer = (notification = {open: false, message: ''}, action)
 export default combineReducers({
     enigma: initializeEnigmaReducer,
     accounts: initializeAccountsReducer,
+    deployedDataValidation: deployedDataValidationReducer,
     notification: notifyMessageReducer,
     form: formReducer
 });
