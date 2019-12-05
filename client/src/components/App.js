@@ -45,6 +45,7 @@ class App extends Component {
     async componentDidMount() {
         // Initialize enigma-js client library (including web3)
         const enigma = await getEnigmaInit();
+        enigma.setTaskKeyPair('cupcake');
         // Create redux action to initialize set state variable containing enigma-js client library
         this.props.initializeEnigma(enigma);
         // Initialize unlocked accounts
