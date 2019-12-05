@@ -127,6 +127,7 @@ class App extends Component {
         });
         
         while (task.ethStatus === 1) {
+            console.log(task)
             // Poll for task record status and finality on Ethereum after worker has finished computation
             task = await this.props.enigma.getTaskRecordStatus(task);
             await this.sleep(1000);
