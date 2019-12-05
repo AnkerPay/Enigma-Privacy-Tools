@@ -111,7 +111,7 @@ class DataValidation extends Component {
       task = await this.props.enigma.decryptTaskResult(task);
       // Abi-decode the output to its desired components
       console.log(task)
-      openSnackbar({ message: 'Task succeeded: added dataset' + (status ? '': ' not ') + ' equal to the previous one' });
+      openSnackbar({ message: 'Task succeeded: added dataset equal to the previous one' });
     } else {
       openSnackbar({ message: 'Task failed: did not add dataset' });
     }
