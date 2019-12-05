@@ -46,11 +46,12 @@ class App extends Component {
         console.log('initializeAccounts')
         
         const secretContractCount = await enigma.enigmaContract.methods.countSecretContracts().call();
-
+        console.log('secretContractCount')
         const deployedDataValidationAddress = (await enigma.enigmaContract.methods
           .getSecretContractAddresses(secretContractCount - 1, secretContractCount).call())[0];
-
+        console.log('deployedDataValidationAddress')
         this.props.deployDataValidation(deployedDataValidationAddress);
+         console.log(deployedDataValidationAddress)
     }
 
 
