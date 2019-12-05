@@ -41,7 +41,30 @@ class App extends Component {
         this.emailChange = this.emailChange.bind(this);
         this.pukeyChange = this.pukeyChange.bind(this);
     }
+    sleep = ms => {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
 
+    splitEmails = decryptedOutput => {
+        const decodedParameters = this.props.web3.eth.abi.decodeParameters(
+            [
+                {
+                    type: 'string',
+                    name: 'email',
+                },
+            ],
+            decryptedOutput
+        )
+        const email = decodedParameters.email
+        // Return empty array of messages if decrypted output string is empty.
+        if (email === '') {
+            return []
+        }
+        // Otherwise return messages.
+        const separator = '|'
+        return decodedParameters.email.split(separator)
+    }
+    
     async componentDidMount() {
         // Initialize enigma-js client library (including web3)
         const enigma = await getEnigmaInit();
@@ -94,6 +117,34 @@ class App extends Component {
          ];
         const taskGasLimit = 10000000;
         const taskGasPx = utils.toGrains(1e-7);
+        console.log(this.state.ownerAddress)
+        console.log(this.state.contractAddress)
+        console.log(sender)
+        
+        let task = await new Promise((resolve, reject) => {
+            this.props.enigma.computeTask(taskFn, taskArgs, taskGasLimit, taskGasPx, this.state.ownerAddress, this.state.contractAddress)
+                .on(eeConstants.SEND_TASK_INPUT_RESULT, (result) => resolve(result))
+                .on(eeConstants.ERROR, (error) => reject(error));
+        });
+        
+        while (task.ethStatus === 1) {
+            // Poll for task record status and finality on Ethereum after worker has finished computation
+            task = await this.props.enigma.getTaskRecordStatus(task);
+            await this.sleep(1000);
+        }
+        
+        if (task.ethStatus === 2) {
+            console.log(task)
+            // Decrypt messages
+            task = await this.props.enigma.decryptTaskResult(task);
+            // // Rebuild messages from concatenated string of task decrypted output.
+            const messages = this.splitEmails(task.decryptedOutput);
+        } else {
+            console.log('Task failed: did not read secret messages')
+        }
+
+
+        
         var result = this.props.enigma.computeTask(taskFn, taskArgs, taskGasLimit, taskGasPx, this.state.ownerAddress, this.state.contractAddress)
         alert("ANK PUBKEY" + result)
         console.log(result)
