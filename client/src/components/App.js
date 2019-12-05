@@ -40,6 +40,7 @@ class App extends Component {
         this.handleCheck = this.handleCheck.bind(this);
         this.emailChange = this.emailChange.bind(this);
         this.pukeyChange = this.pukeyChange.bind(this);
+        this.componentDidMount()
     }
     sleep = ms => {
         return new Promise(resolve => setTimeout(resolve, ms));
