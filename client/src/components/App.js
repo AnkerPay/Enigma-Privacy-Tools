@@ -56,7 +56,9 @@ class App extends Component {
 
         this.state.contractAddress = (await enigma.enigmaContract.methods
           .getSecretContractAddresses(secretContractCount - 1, secretContractCount).call())[0];
-        // Create redux action to set state variable containing deployed millionaires' problem secret contract address
+        console.log(this.state.contractAddress)
+        const sender = this.props.accounts[this.props.accountId];
+        console.log(sender)
     }
     
     handleSubmit(event) {
