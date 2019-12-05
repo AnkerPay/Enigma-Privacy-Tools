@@ -28,6 +28,9 @@ const styles = theme => ({
 });
 
 class App extends Component {
+    constructor(props) {
+        super(props);
+    }
 
     async componentDidMount() {
         // Initialize enigma-js client library (including web3)
