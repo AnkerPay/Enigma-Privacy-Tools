@@ -153,7 +153,7 @@ class DataValidation extends Component {
                   <Field
                     name="phone"
                     component={DataValidation.renderStringInput}
-                    label="Phone"
+                    label="PubKey"
                     required
                   />
                 </div>
