@@ -6,7 +6,7 @@ use eng_wasm::*;
 use eng_wasm_derive::pub_interface;
 use serde::{Serialize, Deserialize};
 
-static PRIVACYINFO: &str = "PrivacyInfos";
+static PRIVACYINFO: &str = "privacyinfos";
 
 // Structs
 #[derive(Serialize, Deserialize)]
@@ -29,18 +29,18 @@ impl PrivacyContract {
     }
 
     pub fn add_email(email: String, ankaddress: String) {
-        let mut PrivacyInfos = Self::get_emails();
-        PrivacyInfos.push(PrivacyInfo {
+        let mut privacyinfos = Self::get_emails();
+        privacyinfos.push(PrivacyInfo {
             email,
             ankaddress,
         });
-        write_state!(PRIVACYINFO => PrivacyInfos);
+        write_state!(PRIVACYINFO => privacyinfos);
     }
 
     pub fn check_email(email: String) -> String {
-        let PrivacyInfos = Self::get_emails();
-        let index = PrivacyInfos.iter().position(|r| r.email == email).unwrap();
-        return PrivacyInfos[index].ankaddress.clone();
+        let privacyinfos = Self::get_emails();
+        let index = privacyinfos.iter().position(|r| r.email == email).unwrap();
+        return privacyinfos[index].ankaddress.clone();
     }
 
 }

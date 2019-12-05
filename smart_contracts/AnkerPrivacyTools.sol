@@ -5,7 +5,7 @@ contract AnkerPrivacyTools {
     address private owner;
     address private scAuthorized;
 
-    address[] private registeredPrivacyInfos;
+    address[] private registeredPrivacyinfos;
 
     constructor
             (
