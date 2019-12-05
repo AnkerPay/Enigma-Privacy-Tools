@@ -32,9 +32,9 @@ class App extends Component {
         this.state = {
             email: "",
             pubkey: "",
-            ownerAddress: "0xFFcf8FDEE72ac11b5c542428B35EEF5769C409f0",
+            ownerAddress: "0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1",
             isRequesting: false,
-            contractAddress: ""
+            contractAddress: "0x59d3631c86BbE35EF041872d502F218A39FBa150"
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleCheck = this.handleCheck.bind(this);
