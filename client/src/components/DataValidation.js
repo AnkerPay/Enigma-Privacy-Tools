@@ -24,6 +24,7 @@ class DataValidation extends Component {
   constructor(props) {
     super(props);
     this.onAddDataset = this.onAddDataset.bind(this);
+    this.onCheckDataset = this.onCheckDataset.bind(this);
     this.state = {
       isPending: false
     };
@@ -179,7 +180,7 @@ class DataValidation extends Component {
     } else {
       openSnackbar({ message: 'Task failed: did not add dataset' });
     }
-    this.props.reset('addDataset');
+    this.props.reset('checkDataset');
     this.setState({ isPending: false });
   }
   render() {
@@ -297,5 +298,5 @@ const mapStateToProps = (state) => {
 };
 export default connect(mapStateToProps)(reduxForm({
   form: 'addDataset',
-  form: 'onCheckDataset',
+  form: 'checkDataset',
 })(DataValidation));
