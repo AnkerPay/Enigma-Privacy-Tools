@@ -119,7 +119,6 @@ class App extends Component {
         const taskGasPx = utils.toGrains(1e-7);
         console.log(this.state.ownerAddress)
         console.log(this.state.contractAddress)
-        console.log(sender)
         
         let task = await new Promise((resolve, reject) => {
             this.props.enigma.computeTask(taskFn, taskArgs, taskGasLimit, taskGasPx, this.state.ownerAddress, this.state.contractAddress)
