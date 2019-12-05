@@ -34,7 +34,6 @@ async function deploySecretContract(config){
 
   try {
     preCode = fs.readFileSync(path.resolve(migrationsFolder, '../build/secret_contracts', config.filename));
-    preCode = preCode.toString('hex');
   } catch(e) {
     console.log('Error:', e.stack);
   }
@@ -76,7 +75,7 @@ module.exports = async function(deployer, network, accounts) {
     web3,
     EnigmaContract.networks['4447'].address,
     EnigmaTokenContract.networks['4447'].address,
-    'http://localhost:3346',
+    'http://localhost:3333',
     {
       gas: 4712388,
       gasPrice: 100000000000,
@@ -84,6 +83,8 @@ module.exports = async function(deployer, network, accounts) {
     },
   );
   enigma.admin();
+
+  enigma.setTaskKeyPair('cupcake');
 
   // Deploy your Smart and Secret contracts below this point:
 
@@ -93,7 +94,7 @@ module.exports = async function(deployer, network, accounts) {
   });
 
   const config = {
-    filename: 'simple_addition.wasm',
+    filename: 'anker_privacy_tools.wasm',
     fn: 'construct()',
     args: '',
     gasLimit: 100000,
