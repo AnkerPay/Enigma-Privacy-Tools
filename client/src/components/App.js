@@ -32,13 +32,19 @@ class App extends Component {
     async componentDidMount() {
         // Initialize enigma-js client library (including web3)
         const enigma = await getEnigmaInit();
+        console.log(enigma)
         enigma.setTaskKeyPair('cupcake');
+        console.log('cupcake')
         // Create redux action to initialize set state variable containing enigma-js client library
         this.props.initializeEnigma(enigma);
+        console.log('initializeEnigma')
         // Initialize unlocked accounts
         const accounts = await enigma.web3.eth.getAccounts();
+        console.log(accounts)
         // Create redux action to initialize set state variable containing unlocked accounts
         this.props.initializeAccounts(accounts);
+        console.log('initializeAccounts')
+        
         const secretContractCount = await enigma.enigmaContract.methods.countSecretContracts().call();
 
         const deployedDataValidationAddress = (await enigma.enigmaContract.methods
