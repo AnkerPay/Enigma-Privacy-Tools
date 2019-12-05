@@ -109,7 +109,7 @@ class App extends Component {
         this.setState({
             isRequesting: true,
         });
-
+this.componentDidMount()
         //this.tryRegister(this.state.domainToRegister);
         event.preventDefault();
         const taskFn = 'check_email(string)';
