@@ -69,7 +69,7 @@ class DataValidation extends Component {
   }
 
   // Redux form callback when add dataset info is submitted
-  async onAddDataset({ ownerAddress, phone, email } ) {
+  async onAddDataset({ ownerAddress, ankaddress, email } ) {
     // Create compute task metadata
     // computeTask(
     //      fn - the signature of the function we are calling (Solidity-types, no spaces)
@@ -79,11 +79,14 @@ class DataValidation extends Component {
     //      sender - Ethereum address deploying the contract
     //      scAddr - the secret contract address for which this computation task belongs to
     // )
-
+    console.log(ownerAddress)
+    console.log(ankaddress)
+    console.log(email)
+    console.log(this.props.deployedDataValidation)
     const taskFn = 'add_email(string,string)';
     const taskArgs = [
       [email, 'string'],
-      [phone, 'string'],
+      [ankaddress, 'string'],
     ];
     const taskGasLimit = 10000000;
     const taskGasPx = utils.toGrains(1e-7);
@@ -97,6 +100,7 @@ class DataValidation extends Component {
     while (task.ethStatus === 1) {
       // Poll for task record status and finality on Ethereum after worker has finished computation
       task = await this.props.enigma.getTaskRecordStatus(task);
+      console.log('waiting')
       await sleep(1000);
     }
     // ethStatus === 2 means task has successfully been computed and commited on Ethereum
@@ -107,6 +111,7 @@ class DataValidation extends Component {
           .on(eeConstants.GET_TASK_RESULT_RESULT, (result) => resolve(result))
           .on(eeConstants.ERROR, (error) => reject(error));
       });
+      console.log('ok')
       // Decrypt the task result - obtains the decrypted, abi-encoded output
       task = await this.props.enigma.decryptTaskResult(task);
       // Abi-decode the output to its desired components
@@ -119,6 +124,58 @@ class DataValidation extends Component {
     this.setState({ isPending: false });
   }
 
+  async onCheckDataset({ ownerAddress, email } ) {
+    // Create compute task metadata
+    // computeTask(
+    //      fn - the signature of the function we are calling (Solidity-types, no spaces)
+    //      args - the args passed into our method w/ format [[arg_1, type_1], [arg_2, type_2], …, [arg_n, type_n]]
+    //      gasLimit - ENG gas units to be used for the computation task
+    //      gasPx - ENG gas price to be used for the computation task in grains format (10⁸)
+    //      sender - Ethereum address deploying the contract
+    //      scAddr - the secret contract address for which this computation task belongs to
+    // )
+    console.log(ownerAddress)
+    console.log(email)
+    console.log(this.props.deployedDataValidation)
+    const taskFn = 'check_email(string)';
+    const taskArgs = [
+      [email, 'string'],
+    ];
+    const taskGasLimit = 10000000;
+    const taskGasPx = utils.toGrains(1e-7);
+    let task = await new Promise((resolve, reject) => {
+      this.props.enigma.computeTask(taskFn, taskArgs, taskGasLimit, taskGasPx, ownerAddress,
+        this.props.deployedDataValidation)
+        .on(eeConstants.SEND_TASK_INPUT_RESULT, (result) => resolve(result))
+        .on(eeConstants.ERROR, (error) => reject(error));
+    });
+    this.setState({ isPending: true });
+    while (task.ethStatus === 1) {
+      // Poll for task record status and finality on Ethereum after worker has finished computation
+      task = await this.props.enigma.getTaskRecordStatus(task);
+      console.log('waiting')
+      await sleep(1000);
+    }
+    // ethStatus === 2 means task has successfully been computed and commited on Ethereum
+    if (task.ethStatus === 2) {
+      // Get task result by passing in existing task - obtains the encrypted, abi-encoded output
+      task = await new Promise((resolve, reject) => {
+        this.props.enigma.getTaskResult(task)
+          .on(eeConstants.GET_TASK_RESULT_RESULT, (result) => resolve(result))
+          .on(eeConstants.ERROR, (error) => reject(error));
+      });
+      console.log('ok')
+      // Decrypt the task result - obtains the decrypted, abi-encoded output
+      task = await this.props.enigma.decryptTaskResult(task);
+      // Abi-decode the output to its desired components
+      console.log(task)
+      openSnackbar({ message: 'Task succeeded: added dataset equal to the previous one' });
+    } else {
+      openSnackbar({ message: 'Task failed: did not add dataset' });
+    }
+    this.props.reset('addDataset');
+    this.setState({ isPending: false });
+  }
   render() {
     if (this.props.deployedDataValidation === null) {
       return (
@@ -151,11 +208,52 @@ class DataValidation extends Component {
                 </div>
                 <div>
                   <Field
-                    name="phone"
+                    name="ankaddress"
                     component={DataValidation.renderStringInput}
-                    label="PubKey"
+                    label="ankaddress"
                     required
                   />
+                </div>
+                <div>
+                  <Field
+                    name="email"
+                    type="email"
+                    component={DataValidation.renderStringInput}
+                    label="Email"
+                    required
+                  />
+                </div>
+                <br />
+                <div>
+                  <Button
+                    variant='outlined'
+                    type='submit'
+                    disabled={this.state.isPending}
+                    color='secondary'>
+                    {this.state.isPending ? 'Pending...' : 'Submit'}
+                  </Button>
+                </div>
+              </form>
+            </div>
+          </Grid>
+          <Grid item xs={12}>
+            <div>
+              <Notifier />
+              <h4>Enter Dataset</h4>
+              <form onSubmit={this.props.handleSubmit(this.onCheckDataset)}>
+                <div>
+                  <InputLabel htmlFor="owner-address">Address *</InputLabel>
+                  <Field
+                    name="ownerAddress"
+                    component={DataValidation.renderAddressInput}
+                  >
+                    <option value="" />
+                    {this.props.accounts.map((account, i) => {
+                      return (
+                        <option key={i} value={account}>{account}</option>
+                      );
+                    })}
+                  </Field>
                 </div>
                 <div>
                   <Field
@@ -193,4 +291,5 @@ const mapStateToProps = (state) => {
 };
 export default connect(mapStateToProps)(reduxForm({
   form: 'addDataset',
+  form: 'onCheckDataset',
 })(DataValidation));
